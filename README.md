@@ -1,3 +1,3 @@
-# Postgraduate Diploma in Data science and Business Analytics
+# Postgraduate Diploma
 
-Projects
+Data Science and Business Analytics Projects from my PG Diploma Course
