@@ -1,2 +1,3 @@
-# PGD
-Data science and Business Analytics introduction
+# Postgraduate Diploma in Data science and Business Analytics
+
+Projects
