@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ContentFilters</key>
+	<dict/>
+	<key>auto_connect</key>
+	<true/>
+	<key>data</key>
+	<dict>
+		<key>connection</key>
+		<dict>
+			<key>allowDataLocalInfile</key>
+			<integer>0</integer>
+			<key>database</key>
+			<string>centralised_college_db</string>
+			<key>enableClearTextPlugin</key>
+			<integer>0</integer>
+			<key>host</key>
+			<string>localhost</string>
+			<key>kcid</key>
+			<string>8309071679488169628</string>
+			<key>name</key>
+			<string>MySQL</string>
+			<key>rdbms_type</key>
+			<string>mysql</string>
+			<key>sslCACertFileLocation</key>
+			<string></string>
+			<key>sslCACertFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>sslCertificateFileLocation</key>
+			<string></string>
+			<key>sslCertificateFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>sslKeyFileLocation</key>
+			<string></string>
+			<key>sslKeyFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>type</key>
+			<string>SPTCPIPConnection</string>
+			<key>useSSL</key>
+			<integer>0</integer>
+			<key>user</key>
+			<string>root</string>
+		</dict>
+		<key>session</key>
+		<dict>
+			<key>connectionEncoding</key>
+			<string>utf8mb4</string>
+			<key>contentFilterV2</key>
+			<dict>
+				<key>children</key>
+				<array/>
+				<key>filterClass</key>
+				<string>groupNode</string>
+				<key>isConjunction</key>
+				<true/>
+			</dict>
+			<key>contentPageNumber</key>
+			<integer>1</integer>
+			<key>contentSelection</key>
+			<data>
+			YnBsaXN0MDDUAQIDBAUGBwpYJHZlcnNpb25ZJGFyY2hpdmVyVCR0
+			b3BYJG9iamVjdHMSAAGGoF8QD05TS2V5ZWRBcmNoaXZlctEICVRk
+			YXRhgAGoCwwXGBkaHiVVJG51bGzTDQ4PEBMWV05TLmtleXNaTlMu
+			b2JqZWN0c1YkY2xhc3OiERKAAoADohQVgASABYAHVHR5cGVUcm93
+			c18QHVNlbGVjdGlvbkRldGFpbFR5cGVOU0luZGV4U2V00hsPHB1c
+			TlNSYW5nZUNvdW50EACABtIfICEiWiRjbGFzc25hbWVYJGNsYXNz
+			ZXNaTlNJbmRleFNldKIjJFpOU0luZGV4U2V0WE5TT2JqZWN00h8g
+			JidcTlNEaWN0aW9uYXJ5oiYkAAgAEQAaACQAKQAyADcASQBMAFEA
+			UwBcAGIAaQBxAHwAgwCGAIgAigCNAI8AkQCTAJgAnQC9AMIAzwDR
+			ANMA2ADjAOwA9wD6AQUBDgETASAAAAAAAAACAQAAAAAAAAAoAAAA
+			AAAAAAAAAAAAAAABIw==
+			</data>
+			<key>contentSortColIsAsc</key>
+			<true/>
+			<key>contentViewport</key>
+			<string>{{0, 0}, {693, 474}}</string>
+			<key>isToolbarVisible</key>
+			<true/>
+			<key>queries</key>
+			<string>
+-- PROCEDURE 1 - EXCEPTION HANDLING - SHOWING ERROR IF ENTERING DUPLICATE VALUES
+
+DELIMITER $$
+
+CREATE PROCEDURE AddLocation(
+IN inroom INT, 
+IN inbuilding VARCHAR(255)
+)
+BEGIN
+	 -- exit if the duplicate key occurs
+	 DECLARE EXIT HANDLER FOR 1062
+	 BEGIN
+		SELECT CONCAT('Error, duplicate key (',inroom,',',inbuilding,') occurred') AS message;
+	 END;
+	 
+	 -- execute the procedure if there is no error
+	 INSERT INTO location (room_no, building_name) 
+	 VALUES (inroom, inbuilding);
+	 
+	 -- return the updated table with the new entry
+	 SELECT * FROM location ORDER BY building_name;
+END$$ 	 
+
+DELIMITER ;
+
+
+
+CALL AddLocation(5,'Birla Building');
+
+
+CALL AddLocation(1,'TATA Memorial Building');
+
+
+
+
+DROP PROCEDURE AddLocation;
+
+
+-- PROCEDURE 2 - SIMPLE PROCEDURE TO SHOW SUBJECTS OF COURSE REQUIREMENTS
+
+DELIMITER $$
+
+CREATE PROCEDURE GetCourseRequirements(
+IN incourse_abb VARCHAR(255))
+
+BEGIN
+
+-- getting course requirements
+SELECT c.course_abb, c.course_name, sub.sub_name,
+sub.credits FROM courses as c  JOIN course_requirements as cr ON
+cr.course_id = c.course_id JOIN subjects as sub ON cr.sub_code = sub.sub_code WHERE course_abb = incourse_abb;
+
+END$$
+
+DELIMITER ;
+
+
+
+CALL GetCourseRequirements("MBBS");
+
+
+-- PROCEDURE 3 - CASE STATEMENT
+
+DELIMITER $$
+
+CREATE PROCEDURE GetStudentGrades(
+IN instu_id INT)
+
+BEGIN
+
+DECLARE grade VARCHAR(15);
+
+SELECT s.sub_code, subjects.sub_name, s.marks,
+CASE
+	WHEN marks &lt;= 45 THEN "F"
+    WHEN marks &gt; 45 and marks &lt;= 60 THEN "C"
+    WHEN marks &gt; 60  and marks &lt; 75 THEN "B"
+    WHEN marks &gt;= 75  and marks &lt;= 90 THEN "A"
+    WHEN marks &gt; 95 THEN "Distinction"
+    ELSE "We do not have enough information about the grade at present. Please check again later."
+END AS grade
+FROM scores AS s JOIN subjects ON s.sub_code = subjects.sub_code WHERE stu_id = instu_id;
+
+
+END$$
+
+DELIMITER ;
+
+CALL GetStudentGrades(1);
+
+CALL GetStudentGrades(33);
+
+DROP PROCEDURE GetStudentGrades;
+
+
+
+-- PROCEDURE 4 - USING CURSORS AND LOOP TO STORE EMAILS IN A LIST AS PER COURSE 
+
+DELIMITER $$
+CREATE PROCEDURE GetCourseEmailList (
+	IN incourse_id INT, INOUT emailList varchar(4000)
+)
+BEGIN
+	DECLARE finished INTEGER DEFAULT 0;
+	DECLARE emailAddress varchar(255) DEFAULT "";
+
+	-- declare cursor for employee email
+	DEClARE curEmail 
+		CURSOR FOR 
+			SELECT email FROM students WHERE course_id = incourse_id;
+
+	-- declare NOT FOUND handler
+	DECLARE CONTINUE HANDLER 
+        FOR NOT FOUND SET finished = 1;
+
+	OPEN curEmail;
+
+	getEmail: LOOP
+		FETCH curEmail INTO emailAddress;
+		IF finished = 1 THEN 
+			LEAVE getEmail;
+		END IF;
+		-- build email list
+		SET emailList = CONCAT(emailAddress," ; ",emailList);
+	END LOOP getEmail;
+	CLOSE curEmail;
+
+END$$
+DELIMITER ;
+
+
+
+SET @emailList = "";
+CALL GetCourseEmailList(110,@emailList); 
+Select @emailList;
+
+SET @emailList = "";
+CALL GetCourseEmailList(111,@emailList); 
+Select @emailList;
+
+DROP PROCEDURE GetCourseEmailList;
+
+
+-- PROCEDURE 5 - SIMPLE PROCEDURE TO GET STUDENTS
+
+DELIMITER $$
+
+CREATE PROCEDURE GetStudents()
+BEGIN
+SELECT 
+first_name, 
+last_name, 
+course_id
+FROM
+students
+ORDER BY stu_id; 
+END$$
+DELIMITER ;
+
+call GetStudents();
+
+
+
+-- PROCEDURE 6 - IF-ELSE STATEMENT
+
+## If less than 4 credits are required than the course is deemed an elective
+
+use centralised_college_db;
+DELIMITER $$
+
+CREATE PROCEDURE GetElective(
+IN pSubCode INT, 
+OUT pElectStatus VARCHAR(20))
+BEGIN
+DECLARE credit DECIMAL(10,2) DEFAULT 0;
+
+SELECT credits 
+INTO credit
+FROM subjects
+WHERE sub_code = pSubCode;
+
+IF credit &lt; 4 THEN
+SET pElectStatus = 'Elective';
+END IF;
+END$$
+
+DELIMITER ;
+
+
+call GetElective(1,@SubElective);
+
+select @SubElective;
+
+
+call GetElective(4,@SubElective);
+
+select @SubElective;
+
+
+-- PROCEDURE 7 - TRIGGERS
+## Trigger to keep a tab on change in staff details
+
+CREATE TABLE staff_audit (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(255) NOT NULL,
+last_name VARCHAR (255) NOT NULL,
+designation VARCHAR (255) NOT NULL,
+email VARCHAR (255) NOT NULL UNIQUE,
+contact VARCHAR (255),
+address VARCHAR (255),
+changedat DATETIME DEFAULT NULL,
+ action VARCHAR(50) DEFAULT NULL
+);
+
+
+CREATE TRIGGER before_staff_update 
+    BEFORE UPDATE ON staff
+    FOR EACH ROW 
+ INSERT INTO staff_audit
+ SET action = 'update',
+     first_name = old.first_name,
+     last_name = old.last_name,
+     designation = old.designation,
+     email = old.email,
+     contact = old.contact,
+     address = old.address,
+     changedat = NOW();
+     
+     
+SET SQL_SAFE_UPDATES = 0;
+  update staff
+  set last_name = "Kapadia"
+  where first_name = "Dimple";
+
+select * from staff_audit;
+
+
+SET SQL_SAFE_UPDATES = 0;
+  update staff
+  set last_name = "Collins"
+  where first_name = "Jackie";
+
+select * from staff_audit;
+  
+ 
+
+</string>
+			<key>view</key>
+			<string>SP_VIEW_CUSTOMQUERY</string>
+			<key>windowVerticalDividerPosition</key>
+			<real>214</real>
+		</dict>
+	</dict>
+	<key>encrypted</key>
+	<false/>
+	<key>format</key>
+	<string>connection</string>
+	<key>queryFavorites</key>
+	<array/>
+	<key>rdbms_type</key>
+	<string>mysql</string>
+	<key>rdbms_version</key>
+	<string>8.0.28</string>
+	<key>version</key>
+	<integer>1</integer>
+</dict>
+</plist>

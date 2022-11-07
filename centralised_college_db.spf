@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ContentFilters</key>
+	<dict/>
+	<key>auto_connect</key>
+	<true/>
+	<key>data</key>
+	<dict>
+		<key>connection</key>
+		<dict>
+			<key>allowDataLocalInfile</key>
+			<integer>0</integer>
+			<key>enableClearTextPlugin</key>
+			<integer>0</integer>
+			<key>host</key>
+			<string>localhost</string>
+			<key>kcid</key>
+			<string>-2667343858799824258</string>
+			<key>name</key>
+			<string>MySQL</string>
+			<key>rdbms_type</key>
+			<string>mysql</string>
+			<key>sslCACertFileLocation</key>
+			<string></string>
+			<key>sslCACertFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>sslCertificateFileLocation</key>
+			<string></string>
+			<key>sslCertificateFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>sslKeyFileLocation</key>
+			<string></string>
+			<key>sslKeyFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>type</key>
+			<string>SPTCPIPConnection</string>
+			<key>useSSL</key>
+			<integer>0</integer>
+			<key>user</key>
+			<string>root</string>
+		</dict>
+		<key>session</key>
+		<dict>
+			<key>connectionEncoding</key>
+			<string>utf8mb4</string>
+			<key>contentFilterV2</key>
+			<dict>
+				<key>children</key>
+				<array/>
+				<key>filterClass</key>
+				<string>groupNode</string>
+				<key>isConjunction</key>
+				<true/>
+			</dict>
+			<key>contentPageNumber</key>
+			<integer>1</integer>
+			<key>contentSelection</key>
+			<data>
+			YnBsaXN0MDDUAQIDBAUGBwpYJHZlcnNpb25ZJGFyY2hpdmVyVCR0
+			b3BYJG9iamVjdHMSAAGGoF8QD05TS2V5ZWRBcmNoaXZlctEICVRk
+			YXRhgAGoCwwXGBkaHiVVJG51bGzTDQ4PEBMWV05TLmtleXNaTlMu
+			b2JqZWN0c1YkY2xhc3OiERKAAoADohQVgASABYAHVHR5cGVUcm93
+			c18QHVNlbGVjdGlvbkRldGFpbFR5cGVOU0luZGV4U2V00hsPHB1c
+			TlNSYW5nZUNvdW50EACABtIfICEiWiRjbGFzc25hbWVYJGNsYXNz
+			ZXNaTlNJbmRleFNldKIjJFpOU0luZGV4U2V0WE5TT2JqZWN00h8g
+			JidcTlNEaWN0aW9uYXJ5oiYkAAgAEQAaACQAKQAyADcASQBMAFEA
+			UwBcAGIAaQBxAHwAgwCGAIgAigCNAI8AkQCTAJgAnQC9AMIAzwDR
+			ANMA2ADjAOwA9wD6AQUBDgETASAAAAAAAAACAQAAAAAAAAAoAAAA
+			AAAAAAAAAAAAAAABIw==
+			</data>
+			<key>contentSortColIsAsc</key>
+			<true/>
+			<key>contentViewport</key>
+			<string>{{0, 0}, {693, 474}}</string>
+			<key>isToolbarVisible</key>
+			<true/>
+			<key>queries</key>
+			<string># choose the databse
+CREATE DATABASE IF NOT EXISTS centralised_college_db;
+USE centralised_college_db;
+
+# create location table
+DROP TABLE IF EXISTS location;
+
+CREATE TABLE location(
+	ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	room_no INT NOT NULL,
+	building_name VARCHAR (255) NOT NULL,
+	UNIQUE (room_no, building_name)) ;
+	
+INSERT INTO location (room_no, building_name)
+VALUES 
+(1, 'Tata Memorial Building'),
+(2, 'Tata Memorial Building'), 
+(3, 'Tata Memorial Building'),
+(4, 'Tata Memorial Building'),
+(1, 'Birla Building'),
+(5, 'Ambani Building'),
+(8, 'Piramal Building'),
+(2, 'Piramal building');
+
+
+# Creating the subjects table
+DROP TABLE IF EXISTS subjects;
+
+CREATE TABLE subjects(
+sub_code INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+sub_name VARCHAR (255) NOT NULL,
+credits INT NOT NULL,
+);
+
+INSERT INTO subjects (sub_code, sub_name, credits)
+VALUES 
+(1, 'Biology I', 4),
+(2, 'Biology II', 4),
+(3, 'Physiology', 4),
+(4, 'Pathology', 3),
+(5, 'Microbiology', 3),
+(6, 'Anatomy', 3),
+(7, 'Pediatrics', 4),
+(8, 'Orthopaedics', 3),
+(9, 'Science &amp; pharmacology', 4),
+(10, 'Psychology', 3),
+(11, 'General Surgery', 4),
+(12, 'General Medicine', 4),
+(13, 'Medical Ethics', 2),
+(14, 'Biomechanics', 3),
+(15, 'Opthalmology', 4),
+(16, 'Statistical Methods', 4),
+(17, 'Analytics', 4),
+(18, 'Machine Learning', 4),
+(19, 'Chemistry', 4),
+(20, 'Physics', 4),
+(21, 'Automotives', 4),
+(22, 'Algorithms', 3),
+(23, 'Fundamentals of Programming', 4),
+(24, 'Industrial Mechanics', 3),
+(25, 'Calculus I', 3),
+(26, 'Calculus II', 3),
+(27, 'Computer Systems', 3),
+(28, 'Fluid Mechanics', 4),
+(29, 'Robotics', 4),
+(30, 'Data Structures', 2),
+(31, 'Marketing', 3),
+(32, 'Economics', 4),
+(33, 'Financial Accounting', 4),
+(34, 'Auditing', 4),
+(35, 'Cost Accounting', 4),
+(36, 'Derivatives', 4),
+(37, 'Financial Instruments', 4),
+(38, 'Mathematics', 4),
+(39, 'Cost accounting', 4),
+(40, 'Business Strategy', 4),
+(41, 'Communication', 3),
+(42, 'Project Management', 4),
+(43, 'E-Commerce', 4),
+(44, 'Business Development', 3),
+(45, 'Risk Management', 4),
+(46, 'Criminology', 3),
+(47, 'Indian Penal Code', 4),
+(48, 'Corporate Law', 4),
+(49, 'Family Laws', 4),
+(50, 'Civil Procedure Code', 4),
+(51, 'Criminal Procedure Code', 4),
+(52, 'Interpretation of Statues', 4),
+(53, 'Jurisprudence', 4),
+(54, 'Land Laws', 4),
+(55, 'Alternate Dispute Resolution', 4),
+(56, 'Legal Writing &amp; Language', 4),
+(57, 'Law of Evidence', 4),
+(58, 'Torts', 4),
+(59, ' Law &amp; Medicine', 4),
+(60, 'Taxation', 4);
+
+
+# Creating the staff table
+DROP TABLE IF EXISTS staff;
+
+CREATE TABLE staff(
+
+staff_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+first_name VARCHAR(255) NOT NULL,
+last_name VARCHAR (255) NOT NULL,
+designation VARCHAR (255) NOT NULL,
+email VARCHAR (255) NOT NULL UNIQUE,
+contact VARCHAR (255),
+address VARCHAR (255) );
+
+INSERT INTO staff (staff_id, first_name, last_name, designation, email, contact, address)
+VALUES
+(1, 'Smith', 'Jhon', 'Dean of Medicine', 'jhonS@xyz.in', '9999999999', '123 Highland Ave, Kolkata, IN'),
+(2, 'Raina', 'Parulekha', 'Dean of Engineering', 'rainaP@xyz.in', '8888888888', '78 Regina Ave, Jaipur, IN'),
+(3, 'Ishika', 'Patel', 'Dean of Engineering', 'ishikaP@xyz.in', '7777777777', '41 Huges Rd, Mumbai, IN'),
+(4, 'Dimple', 'Kapadia', 'Dean of Law', 'dimpleK@xyz.in', '6666666666', '16 Park St, Imphal, IN'),
+(5, 'Saira', 'Banu', 'Professor', 'sairaB@xyz.in', '4444444444', '12 Landown Rd, Delhi, IN'),
+(6, 'Kunal', 'Kapoor', 'Professor', 'kunakK@xyz.in', '2222222222', '123 Highland Ave, Kolkata, IN'),
+(7, 'Rekha', 'Bharadwaj', 'Professor', 'rekhaB@xyz.in', '0000000000', '78 Regina Ave, Jaipur, IN'),
+(8, 'Jaini', 'Shah', 'Professor', 'jainiS@xyz.in', '7777777777', '41 Huges Rd, Mumbai, IN'),
+(9, 'Ekta', 'Shah','Professor', 'ektaS@xyz.in', '6666666666', '16 Park St, Imphal, IN'),
+(10, 'Bhavya', 'Garodia','Professor', 'bhavyaG@xyz.in', '4444444444', '12 Landown Rd, Delhi, IN'),
+(11, 'Francis', 'Pinto','Professor', 'francisP@xyz.in', '2222222222', '123 Highland Ave, Kolkata, IN'),
+(12, 'Rahul', 'Mali', 'Professor', 'rahulM@xyz.in', '0000000000', '78 Regina Ave, Jaipur, IN'),
+(13, 'Taylor', 'Swift', 'Head of Admissions', 'taylorS@xyz.in', '9999999999', '123 Highland Ave, Kolkata, IN'),
+(14, 'Beyonce', 'Knowles', 'Office Admiistrator', 'beyonce@xyz.in', '8888888888', '78 Regina Ave, Jaipur, IN'),
+(15, 'Michael', 'Jordan', 'Basketball Coach', 'michael@xyz.in', '7777777777', '41 Huges Rd, Mumbai, IN'),
+(16, 'Clara', 'Oswald', 'Counsellor', 'clara@xyz.in', '6666666666', '16 Park St, Imphal, IN'),
+(17, 'Billie', 'Jean', 'Bursar', 'billie@xyz.in', '4444444444', '12 Landown Rd, Delhi, IN'),
+(18, 'Jackie', 'Rhodes', 'Clerk', 'jackie@xyz.in', '2222222222', '123 Highland Ave, Kolkata, IN');
+
+
+# Create the departments table
+DROP TABLE IF EXISTS departments;
+
+CREATE TABLE departments(
+	dep_code INT NOT NULL PRIMARY KEY,
+	dep_name VARCHAR (255) NOT NULL,
+	dep_head INT NOT NULL,	
+	dep_office INT NOT NULL,
+	FOREIGN KEY(dep_office) REFERENCES location (ID),
+	FOREIGN KEY(dep_head) REFERENCES staff (staff_id)
+);
+
+# insert departments data
+
+INSERT INTO departments (dep_code, dep_name, dep_head, dep_office)
+VALUES
+(101, 'Medicine', 1, 1 ),
+(201, 'Engineering', 2, 2 ),
+(301, 'Business', 3, 3 ),
+(401, 'Law', 4, 4);
+
+
+
+# Create the Courses table
+
+DROP TABLE IF EXISTS courses;
+
+CREATE TABLE courses(
+	course_id INT NOT NULL,
+	course_abb VARCHAR (255) NOT NULL,
+	course_name VARCHAR (255) NOT NULL,
+	dep_code INT NOT NULL,
+	PRIMARY KEY (course_id),
+	FOREIGN KEY(dep_code) REFERENCES departments (dep_code)
+);
+
+INSERT INTO courses (course_id, course_abb, course_name, dep_code)
+VALUES
+(110, 'MBBS', 'Bachelor of Medicine, Bachelor of Surgery', 101),
+(111, 'MD', 'Doctor of Medicine', 101),
+(112, 'BPT', 'Bachelor of Physiotherapy', 101),
+(113, 'BAMS', 'Bachelor of Ayurvedic Medicine &amp; Surgery', 101),
+(114, 'BPharm', 'Bachelor of Pharmacy', 101),
+(210, 'BS','Bachelor of Statistics', 201),
+(211, 'B.Tech', 'Bachelor of Technology', 201),
+(212, 'ME','Metallurgical Engineering', 201 ),
+(213, 'MSCS', 'Master of Science in Computer Science', 201),
+(310, 'B.Com', 'Bachelor of Commerce', 301),
+(311, 'BFA', 'Bachelor of Finance &amp; Accounts', 301),
+(312, 'M.Com', 'Master of Commerce', 301),
+(313, 'BBA', 'Bachelor of Business Administration', 301),
+(410, 'LLB', ' Bachelor of Laws', 401),
+(411, 'LLM', 'Master of Laws', 401),
+(412, 'JD', 'Juris Doctor', 401),
+(413, 'PhD.L', ' Doctor of Philosophy in Law', 401);
+
+
+# creating the students table
+DROP TABLE IF EXISTS students;
+
+CREATE TABLE students(
+
+stu_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+first_name VARCHAR(255) NOT NULL,
+last_name VARCHAR (255) NOT NULL,
+DOB VARCHAR (255) NOT NULL,
+email VARCHAR (255) NOT NULL UNIQUE,
+contact VARCHAR(255),
+course_id INT NOT NULL,
+FOREIGN KEY(course_id) REFERENCES courses (course_id)
+);
+
+INSERT INTO students (stu_id, first_name, last_name, DOB, email, contact, course_id)
+VALUES
+(1, 'Revathi', 'Radhamohan', 'dd/mm/yyyy', 'revathi@xyz.in', '9999999999', 110),
+(2, 'Mann', 'Shah', 'dd/mm/yyyy', 'mann@xyz.in', '8888888888', 111),
+(3, 'Keyush', 'Shah', 'dd/mm/yyyy', 'keyush@xyz.in', '777777777', 112),
+(4, 'Jui', 'Wakade', 'dd/mm/yyyy', 'jui@xyz.in', '6666666666', 113),
+(5, 'Saanya', 'Jain', 'dd/mm/yyyy', 'saanya@xyz.in', '5555555555', 114),
+(6, 'Heth', 'Dave', 'dd/mm/yyyy', 'heth@xyz.in', '11111111111', 210),
+(7, 'Harshita', 'Phalor', 'dd/mm/yyyy', 'harshita@xyz.in', '2222222222', 211),
+(8, 'Riddhi', 'Bhatt', 'dd/mm/yyyy', 'riddhi@xyz.in', '55555555555', 212),
+(9, 'Urvi', 'Vaidya', 'dd/mm/yyyy', 'urvi@xyz.in', '4444444444', 213),
+(10, 'Geth', 'Devara', 'dd/mm/yyyy', 'geth@xyz.in', '0000000000', 310),
+(11, 'Kaushiki', 'Ambi', 'dd/mm/yyyy', 'kaushiki@xyz.in', '4444444444', 311),
+(12, 'Ved', 'Aralkar', 'dd/mm/yyyy', 'ved@xyz.in', '5555555555', 312),
+(13, 'Rohang', 'Shah', 'dd/mm/yyyy', 'rohang@xyz.in','3333333333', 313),
+(14, 'Ryan', 'Lemos', 'dd/mm/yyyy', 'ryan@xyz.in', '8888888888', 410),
+(15, 'Shrushti', 'Shah', 'dd/mm/yyyy', 'shrushti@xyz.in', '0000000000', 411),
+(16, 'Aishwarya', 'Panse', 'dd/mm/yyyy', 'aishwarya@xyz.in', '3333333333', 412),
+(17, 'Will', 'Smith', 'dd/mm/yyyy', 'will@xyz.in', '5555555555', 413),
+(18, 'Anna', 'Kendrik', 'dd/mm/yyyy', 'anna@xyz.in', '9999999999', 110),
+(19, 'Britney', 'Spears', 'dd/mm/yyyy', 'britney@xyz.in', '111111111', 111),
+(20, 'Rupert', 'Pink', 'dd/mm/yyyy', 'rupert@xyz.in', '2222222222', 112),
+(21, 'Joseph', 'Willow', 'dd/mm/yyyy', 'joseph@xyz.in', '8888888888', 113),
+(22, 'Thomas', 'James', 'dd/mm/yyyy', 'thomas@xyz.in', '55555555555', 114),
+(23, 'Marta', 'Kauffman', 'dd/mm/yyyy', 'marta@xyz.in', '8888888888', 210),
+(24, 'Ratan', 'Tata', 'dd/mm/yyyy', 'ratan@xyz.in', '4444444444', 211),
+(25, 'Danny', 'Devito', 'dd/mm/yyyy', 'danny@xyz.in', '3333333333', 212),
+(26, 'Rachel', 'Green', 'dd/mm/yyyy', 'rachel@xyz.in', '0000000000', 213),
+(27, 'Monica', 'Geller', 'dd/mm/yyyy', 'monica@xyz.in', '1111111111', 310),
+(28, 'Ross', 'Gellar', 'dd/mm/yyyy', 'ross@xyz.in', '5555555555', 311),
+(29, 'Chandler', 'Bing', 'dd/mm/yyyy', 'chandler@xyz.in', '0000000000', 312),
+(30, 'Joey', 'Tribiani', 'dd/mm/yyyy', 'joey@xyz.in', '2222222222', 313),
+(31, 'Phoebe', 'Buffay', 'dd/mm/yyyy', 'phoebe@xyz.in', '999999999', 410),
+(32, 'Harry', 'Potter', 'dd/mm/yyyy', 'harry@xyz.in', '3333333333', 411),
+(33, 'Hermoine', 'Granger', 'dd/mm/yyyy', 'hermoine@xyz.in', '6666666666', 412),
+(34, 'Ron', 'Weasley', 'dd/mm/yyyy', 'ron@xyz.in', '0000000000', 413),
+(35, 'Marcus', 'Kane', 'dd/mm/yyyy', 'marcus@xyz.in', '3333333333', 110);
+
+
+# creating the cpurse requirements table
+DROP TABLE IF EXISTS course_requirements;
+
+CREATE TABLE course_requirements(
+	ID INT AUTO_INCREMENT KEY,
+	course_id INT NOT NULL,
+	sub_code INT NOT NULL,
+	FOREIGN KEY(sub_code) REFERENCES subjects (sub_code),
+	FOREIGN KEY(course_id) REFERENCES courses (course_id)
+	);
+
+INSERT INTO course_requirements (course_id, sub_code)
+VALUES
+(110,1), (110,2), (110,3), (110,4), (110,5), (110,6), (110,7), (110,8),
+(111,9), (111,10), (111,11), (111,12), (111,13), (111,14), (111,15), (111,1),
+(112,2), (112,3), (112, 4), (112,5), (112,6), (112,7), (112,8), (112,9), 
+(113, 10), (113,11), (113,14), (113,15), (113,1), (113,2), (113,4), (113,5),
+(114,6), (114,7), (114,8), (114,9), (114,10), (114,11), (114,12), (114,13),
+(210,1), (210,2), (210,3), (210,4), (210,5), (210,6), (210,7), (210,8),
+(211,9), (211,10), (211,11), (211,12), (211,13), (211,14), (211,15), (211,1),
+(212,2), (212,3), (212,4), (212,5), (212,6), (212,7), (212,8), (212,9),
+(213,10), (213,11), (213,14), (212,15), (212,1), (212,2), (212,3), (212,4),
+(310, 1), (310,2), (310,3), (310,4), (310,5), (310,6), (310,7), (310,8),
+(311,9), (311,10), (311,11), (311,12), (311,13), (311,14), (311,15), (311,1),
+(312,2), (312, 3), (312,4), (312,5), (312,6), (312,7), (312,8), (312,9),
+(313,1), (313,2), (313,3), (313,4), (313,5), (313,6), (313,7), (313,8),
+(410,1), (410,2), (410,3), (410,4), (410,4), (410,5), (410,6), (410,7), (410,8),
+(411,9), (411,10), (411,11), (411,12), (411,13), (411,13), (411,14), (411,15), (411,1),
+(412,2), (412,7), (412,6), (412,14), (412,5), (412,14), (412,1), (412,10),
+(413,3), (413,4), (413,5), (413,6), (413,7), (413,7), (413,8), (413,15);
+
+
+# creating the marks table
+DROP TABLE IF EXISTS scores;
+
+CREATE TABLE scores(
+	stu_id INT NOT NULL,
+	sub_code INT NOT NULL,
+	marks DECIMAL DEFAULT 0,
+	FOREIGN KEY(sub_code) REFERENCES subjects (sub_code),
+	FOREIGN KEY(stu_id) REFERENCES students (stu_id)
+	);
+
+INSERT INTO scores (stu_id, sub_code, marks)
+VALUES
+(1,1,15), (1,2,30), (1,3,17), (1,4,14), (1,5,16), (1,6, 15), (1,7,18), (1,8,16),
+(2,9, 14), (2,10, 15), (2,11, 16), (2,12,18), (2,13, 14), (2,14, 16), (2,15, 19), (2,1, 15);
+
+
+# creating a table for attendance
+DROP TABLE IF EXISTS attendance;
+
+CREATE TABLE attendance(
+	stu_id INT NOT NULL,
+	sub_code INT NOT NULL,
+	attended INT DEFAULT 0, 
+	FOREIGN KEY (stu_id) REFERENCES students (stu_id),
+	FOREIGN KEY (sub_code) REFERENCES subjects (sub_code)
+	);
+
+INSERT INTO attendance (stu_id, sub_code, attended)
+VALUES 
+(1,1,4), (1,2,2), (1,3,2), (1,4,2), (1,5,4), (1,6,2), (1,7,4), (1,8,3);
+
+# Class scedule
+DROP TABLE IF EXISTS lecture_schedule;
+
+CREATE TABLE lecture_schedule(
+	ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	sub_code INT NOT NULL,
+	professor INT NOT NULL,
+	location INT NOT NULL, 
+	lec_time DATETIME ,
+	FOREIGN KEY (professor) REFERENCES staff (staff_id),
+	FOREIGN KEY (location) REFERENCES location (ID),
+	UNIQUE(sub_code, professor, lec_time)
+);
+
+INSERT INTO lecture_schedule (sub_code, location, professor, lec_time)
+VALUES 
+(1, 5, 12, '2021-12-15 15:15:15'), (2, 5, 13,  '2021-12-15 17:17:17'),
+(3, 6, 12, '2021-12-15 15:15:15'), (4, 6, 13, '2021-12-15 17:17:17');
+
+
+
+
+
+
+# getting student course details
+SELECT concat(s.first_name, " ", s.last_name) as name, s.DOB, s.email, s.contact, courses.course_abb, courses.course_name FROM students AS s
+JOIN courses
+ON s.course_id = courses.course_id;
+
+# getting department information
+SELECT d.dep_code, d.dep_name, concat(s.first_name, " ", s.last_name) AS DeptHead,
+concat(l.room_no, " ", l.building_name) AS Location 
+FROM departments AS d JOIN staff AS s
+ON d.dep_head = s.staff_id JOIN location as l
+ON d.dep_office = l.ID;
+
+# getting student scores
+SELECT concat(s.first_name, " ", s.last_name) as Name, s.stu_id, sub.sub_name, scores.marks, sub.credits from students as s
+JOIN scores ON s.stu_id = scores.stu_id
+JOIN subjects AS sub ON scores.sub_code = sub.sub_code;
+
+# getting course requirements
+SELECT c.course_abb, c.course_name, sub.sub_name,
+sub.credits FROM courses as c  JOIN course_requirements as cr ON
+cr.course_id = c.course_id JOIN subjects as sub ON cr.sub_code = sub.sub_code;
+
+
+
+
+
+
+</string>
+			<key>view</key>
+			<string>SP_VIEW_CUSTOMQUERY</string>
+			<key>windowVerticalDividerPosition</key>
+			<real>138</real>
+		</dict>
+	</dict>
+	<key>encrypted</key>
+	<false/>
+	<key>format</key>
+	<string>connection</string>
+	<key>queryFavorites</key>
+	<array/>
+	<key>rdbms_type</key>
+	<string>mysql</string>
+	<key>rdbms_version</key>
+	<string>8.0.26</string>
+	<key>version</key>
+	<integer>1</integer>
+</dict>
+</plist>
